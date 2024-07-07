@@ -66,30 +66,24 @@ const images = [
 
 const gallery = document.querySelector(".gallery");
 
-const createPictures = (images) =>
-  images
-    .map((image) => {
-      const { preview, original, description } = image;
-      return `<li class="gallery-item">
-        <a class="gallery-link">
+const imageElements = images
+  .map(
+    ({ preview, original, description }) => `<li class="gallery-item">
+        <a class="gallery-link" href="${original}">
       <img class="gallery-image"
         src="${preview}"
         alt="${description}"
         data-source="${original}"
       />
       </a>
-    </li>`;
-    })
-    .join("");
+    </li>`
+  )
+  .join("");
 
-// console.log(createImagesMarkup(images));
-const picturesMarkup = createPictures(images);
+gallery.insertAdjacentHTML("beforeend", imageElements);
 
-gallery.insertAdjacentHTML("beforeend", picturesMarkup);
-
-gallery.addEventListener("click", onClock);
-
-function onClock(event) {
+gallery.addEventListener("click", (event) => {
+  event.preventDefault();
   if (event.currentTarget === event.target) {
     return;
   }
@@ -100,4 +94,4 @@ function onClock(event) {
     </div>
     `);
   instance.show();
-}
+});
